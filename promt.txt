@@ -1,0 +1,88 @@
+Quiero que me generes un frontend en **React con Vite, TypeScript y TailwindCSS** para consumir una API en FastAPI.
+
+### 1. Requisitos generales:
+- Usar **axios** para consumir la API.
+- Estar organizado en carpetas (`components/`, `pages/`, `services/`).
+- El diseño debe ser **limpio y profesional** con TailwindCSS.
+- Debe ser **responsivo** (mobile y desktop).
+
+### 2. Funcionalidades:
+1. **Subida de Excel:**
+   - Un formulario con un input de archivo y un botón para enviarlo a `POST /upload-excel`.
+   - Mostrar un mensaje de éxito o error.
+   
+2. **Tablas y gráficos:**
+   - Llamar a `GET /dispositivos` para obtener una lista de dispositivos y mostrarla en una tabla con las columnas:
+     - Código, Descripción, Planta, Estado.
+   - Llamar a `GET /indicadores` para obtener datos de indicadores y mostrar:
+     1. **Pie Chart:** Cumplimiento vs No Cumplimiento.
+     2. **Bar Chart:** Promedio de días por planta.
+     3. **Line Chart:** Evolución temporal de pedidos.
+
+### 3. Estructura esperada:
+
+
+src/
+├── components/
+│ ├── FileUpload.tsx
+│ ├── DispositivosTable.tsx
+│ ├── CumplimientoPieChart.tsx
+│ ├── PromedioDiasBarChart.tsx
+│ └── EvolucionPedidosLineChart.tsx
+├── pages/
+│ └── Dashboard.tsx
+├── services/
+│ └── api.ts
+├── App.tsx
+└── main.tsx
+
+
+
+### 4. Datos esperados de la API:
+- **GET /dispositivos** devuelve un array:
+```json
+[
+  { "codigo": "MFG000123", "descripcion": "Dispositivo X", "planta": "MTF NTG", "estado": "CUMPLE" }
+]
+
+
+{
+  "cumplimiento": [
+    { "estado": "CUMPLE", "value": 123 },
+    { "estado": "NO CUMPLE", "value": 45 }
+  ],
+  "promedios": [
+    { "planta": "MTF NTG", "promedio": 32 },
+    { "planta": "Prats", "promedio": 28 }
+  ],
+  "evolucion": [
+    { "fecha": "2024-01", "pedidos": 12 },
+    { "fecha": "2024-02", "pedidos": 18 }
+  ]
+}
+
+
+5. Requisitos de los gráficos:
+Usar Recharts.
+
+Colores:
+
+Pie Chart: verde (#4CAF50) para CUMPLE, rojo (#F44336) para NO CUMPLE.
+
+Bar Chart: barras azules.
+
+Line Chart: línea azul con puntos visibles.
+
+6. Al finalizar:
+Mostrame todo el código completo y organizado por archivos.
+
+Usar comentarios en las partes clave.
+
+No incluyas lógica de autenticación ni otras cosas extra.
+
+Generá ahora todo el código listo para copiar/pegar.
+
+
+---
+
+📌 **¿Querés que también te pase el prompt para que Bolt te haga los endpoints `/dispositivos` y `/indicadores` en FastAPI, o lo hacemos nosotros manualmente?**
