@@ -1,0 +1,9 @@
+fastapi_app/
+│
+├── main.py                  # Entrada principal FastAPI
+├── requirements.txt         # Dependencias
+├── services/
+│   ├── supabase_service.py  # Conexión y operaciones con Supabase
+│   └── excel_service.py     # Procesamiento de Excel/CSV
+└── models/
+    └── dispositivo_model.py # Pydantic models para validación
