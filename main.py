@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from services.excel.excel_service import procesar_excel
 from services.supabase_service import upsert_dispositivos, obtener_dispositivos, obtener_indicadores
 
-app = FastAPI(title="API Control de Dispositivos")
+app = FastAPI(title="API Control de Dispositivo")
 
 # ✅ CORS
 app.add_middleware(
