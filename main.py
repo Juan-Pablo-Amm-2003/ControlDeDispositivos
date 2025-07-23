@@ -13,7 +13,9 @@ app = FastAPI(title="API Control de Dispositivo")
 # ✅ CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://control-de-dispositivos.vercel.app"  # ✅ solo tu frontend
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
