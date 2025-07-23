@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://controldedispositivos.onrender.com", // ✅ URL del backend en Render
-  timeout: 10000, // opcional: evita que quede colgado demasiado tiempo
+  baseURL: "https://controldedispositivos.onrender.com",  
+  timeout: 10000,  
 });
 
 // ✅ Obtener lista de dispositivos
