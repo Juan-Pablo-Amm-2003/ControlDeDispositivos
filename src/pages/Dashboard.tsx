@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import autoTable from "jspdf-autotable";
 
 import {
   getDispositivos,
@@ -34,38 +35,13 @@ export interface Dispositivo {
   dias_entrega?: number;
 }
 
-interface IndicadorCumplimiento {
-  estado: string;
-  value: number;
-}
-interface IndicadorPromedios {
-  planta: string;
-  promedio: number;
-}
-interface IndicadorEvolucion {
-  fecha: string;
-  pedidos: number;
-}
-interface TipoDispositivo {
-  tipo: string;
-  cantidad: number;
-}
-interface PromedioEtapas {
-  etapa: string;
-  promedio_dias: number;
-}
-interface PedidosPorMes {
-  mes: string;
-  pedidos: number;
-  terminados: number;
-}
 interface Indicadores {
-  cumplimiento: IndicadorCumplimiento[];
-  promedios: IndicadorPromedios[];
-  evolucion: IndicadorEvolucion[];
-  tipos_dispositivo: TipoDispositivo[];
-  pedidos_por_mes: PedidosPorMes[];
-  promedio_etapas: PromedioEtapas[];
+  cumplimiento: { estado: string; value: number }[];
+  promedios: { planta: string; promedio: number }[];
+  evolucion: { fecha: string; pedidos: number }[];
+  tipos_dispositivo: { tipo: string; cantidad: number }[];
+  pedidos_por_mes: { mes: string; pedidos: number; terminados: number }[];
+  promedio_etapas: { etapa: string; promedio_dias: number }[];
 }
 
 const Dashboard: React.FC = () => {
@@ -75,7 +51,6 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Estados del filtro
   const [periodo, setPeriodo] = useState<TipoPeriodo>("todos");
   const [valorPeriodo, setValorPeriodo] = useState<string>("");
 
@@ -135,7 +110,6 @@ const Dashboard: React.FC = () => {
     y += 10;
 
     const cards = document.querySelectorAll(".indicador-card");
-
     for (const card of cards) {
       const canvas = await html2canvas(card as HTMLElement, {
         scale: 2,
@@ -156,6 +130,34 @@ const Dashboard: React.FC = () => {
     }
 
     doc.save(`reporte_indicadores_${new Date().toISOString().slice(0, 10)}.pdf`);
+  };
+
+  const exportarPDFTabla = () => {
+    const doc = new jsPDF("l", "mm", "a4"); // horizontal para más espacio
+    doc.setFontSize(16);
+    doc.text("📋 Listado de Dispositivos", 14, 15);
+    doc.setFontSize(10);
+    doc.text(`Generado: ${new Date().toLocaleString()}`, 14, 22);
+
+    autoTable(doc, {
+      startY: 28,
+      head: [["Código", "Descripción", "Planta", "Estado", "Diseño", "Fabricación", "Resp. Pedido", "Entrega"]],
+      body: dispositivosFiltrados.map((d) => [
+        d.codigo,
+        d.descripcion,
+        d.planta,
+        d.estado,
+        d.dias_diseno ?? "-",
+        d.dias_fabricacion ?? "-",
+        d.dias_respuesta_pedido ?? "-",
+        d.dias_entrega ?? "-",
+      ]),
+      theme: "striped",
+      headStyles: { fillColor: [52, 152, 219] },
+      styles: { fontSize: 8 },
+    });
+
+    doc.save(`dispositivos_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
   if (loading) {
@@ -182,7 +184,6 @@ const Dashboard: React.FC = () => {
     );
   }
 
-  // Aplicar filtros
   const dispositivosFiltrados = filtrarPorPeriodo(dispositivos, periodo, valorPeriodo);
   const indicadoresFiltrados = calcularIndicadores(dispositivosFiltrados);
   const opcionesPeriodo = generarOpcionesPeriodo(dispositivos);
@@ -212,9 +213,7 @@ const Dashboard: React.FC = () => {
         {indicadores && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-700">
-                Indicadores
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-700">Indicadores</h2>
               <button
                 onClick={exportarPDFConGraficos}
                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
@@ -246,9 +245,17 @@ const Dashboard: React.FC = () => {
         )}
       </div>
 
-      {/* ✅ Tabla de dispositivos al final (con los mismos filtros) */}
+      {/* ✅ Tabla de dispositivos al final */}
       <div className="bg-white p-4 rounded-xl shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Listado de Dispositivos</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Listado de Dispositivos</h2>
+          <button
+            onClick={exportarPDFTabla}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            📥 Descargar PDF de la Tabla
+          </button>
+        </div>
         <DispositivosTable dispositivos={dispositivosFiltrados} />
       </div>
     </div>
