@@ -237,7 +237,7 @@ const Dashboard: React.FC = () => {
               <div className="indicador-card xl:col-span-2">
                 <PedidosPorMesCard data={indicadoresFiltrados.pedidos_por_mes} />
               </div>
-              <div className="indicador-card">
+              <div className="indicador-card height={360}">
                 <PromedioEtapasCard data={indicadoresFiltrados.promedio_etapas} />
               </div>
             </div>

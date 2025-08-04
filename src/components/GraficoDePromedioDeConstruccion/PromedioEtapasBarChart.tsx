@@ -19,7 +19,7 @@ interface PromedioEtapas {
 
 export default function PromedioEtapasBarChart({
   data,
-  height = 300,
+  height = 360,
 }: {
   data: PromedioEtapas[];
   height?: number;
@@ -55,7 +55,7 @@ export default function PromedioEtapasBarChart({
         <BarChart
           data={dataRedondeada}
           margin={{ top: 30, right: 30, left: 30, bottom: 40 }}
-          barCategoryGap="25%"
+          barCategoryGap="35%"
         >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="etapa" tick={{ fontSize: 12, fill: "#374151" }} />
