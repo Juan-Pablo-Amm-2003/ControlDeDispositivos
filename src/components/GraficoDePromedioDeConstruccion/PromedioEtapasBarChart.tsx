@@ -1,3 +1,4 @@
+// ✅ PromedioEtapasBarChart.tsx
 import React from "react";
 import {
   BarChart,
@@ -26,21 +27,28 @@ export default function PromedioEtapasBarChart({
   const getColor = (etapa: string) => {
     switch (etapa) {
       case "Diseño":
-        return "#3b82f6"; // Azul
+        return "#3b82f6";
       case "Fabricación":
-        return "#22c55e"; // Verde
+        return "#22c55e";
       case "Respuesta Pedido":
-        return "#f59e0b"; // Amarillo
+        return "#f59e0b";
       default:
-        return "#9ca3af"; // Gris
+        return "#9ca3af";
     }
   };
+
+  const formatearNumero = (num: number) => Number(num.toFixed(2));
+
+  const dataRedondeada = data.map((d) => ({
+    ...d,
+    promedio_dias: formatearNumero(d.promedio_dias),
+  }));
 
   return (
     <div className="flex flex-col items-center w-full" style={{ height }}>
       <ResponsiveContainer width="95%" height="100%">
         <BarChart
-          data={data}
+          data={dataRedondeada}
           margin={{ top: 30, right: 30, left: 30, bottom: 40 }}
           barCategoryGap="25%"
         >
@@ -64,7 +72,7 @@ export default function PromedioEtapasBarChart({
             formatter={(value: number) => [`${value} días`, "Etapa"]}
           />
           <Bar dataKey="promedio_dias" radius={[6, 6, 0, 0]} animationDuration={800}>
-            {data.map((entry, index) => (
+            {dataRedondeada.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getColor(entry.etapa)} />
             ))}
             <LabelList

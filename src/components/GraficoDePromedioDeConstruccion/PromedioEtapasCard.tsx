@@ -1,3 +1,4 @@
+// ✅ PromedioEtapasCard.tsx
 import React, { useState } from "react";
 import PromedioEtapasBarChart from "./PromedioEtapasBarChart";
 
@@ -11,7 +12,6 @@ export default function PromedioEtapasCard({ data }: { data: PromedioEtapas[] })
 
   return (
     <>
-      {/* ✅ Mini-card */}
       <div
         className="bg-white rounded-xl shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-lg hover:scale-105 transition-all"
         onClick={() => setOpen(true)}
@@ -27,7 +27,6 @@ export default function PromedioEtapasCard({ data }: { data: PromedioEtapas[] })
         </p>
       </div>
 
-      {/* ✅ Modal ampliado */}
       {open && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-xl shadow-xl p-6 w-[95%] lg:w-[90%] xl:w-[80%] h-[85%] flex flex-col relative">
