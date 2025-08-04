@@ -1,3 +1,4 @@
+// ✅ TiposDispositivoCard.tsx
 import React, { useState } from "react";
 import TiposDispositivoBarChart from "./TiposDispositivoBarChart";
 
@@ -8,10 +9,10 @@ interface TipoData {
 
 export default function TiposDispositivoCard({ data }: { data: TipoData[] }) {
   const [open, setOpen] = useState(false);
+  const esModoPDF = document?.body?.classList?.contains("exportando-pdf");
 
   return (
     <>
-      {/* ✅ Mini-card */}
       <div
         className="bg-white rounded-xl shadow-md p-4 flex flex-col items-center cursor-pointer hover:shadow-lg hover:scale-105 transition-all"
         onClick={() => setOpen(true)}
@@ -20,14 +21,18 @@ export default function TiposDispositivoCard({ data }: { data: TipoData[] }) {
           Dispositivos por Tipo
         </h3>
         <div className="w-full flex justify-center">
-          <TiposDispositivoBarChart data={data} height={280} showLegend={true} />
+          <TiposDispositivoBarChart
+            data={data}
+            height={esModoPDF ? 420 : 280}
+            showLegend={!esModoPDF}
+            modoExportacionPDF={esModoPDF}
+          />
         </div>
         <p className="text-xs text-gray-500 text-center mt-2">
           (Click para ampliar)
         </p>
       </div>
 
-      {/* ✅ Modal Ampliado */}
       {open && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-xl shadow-xl p-6 w-[95%] lg:w-[90%] xl:w-[80%] h-[85%] flex flex-col relative">
@@ -38,8 +43,8 @@ export default function TiposDispositivoCard({ data }: { data: TipoData[] }) {
               <div className="w-full max-w-[1200px] h-full flex justify-center items-center">
                 <TiposDispositivoBarChart
                   data={data}
-                  height={650}
-                  showLegend={false} // ✅ Sin leyenda en vista ampliada
+                  height={700}
+                  showLegend={false}
                 />
               </div>
             </div>

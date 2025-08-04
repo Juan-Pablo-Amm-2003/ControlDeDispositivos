@@ -1,3 +1,4 @@
+// ✅ TiposDispositivoBarChart.tsx
 import React from "react";
 import {
   BarChart,
@@ -20,11 +21,13 @@ interface TipoData {
 export default function TiposDispositivoBarChart({
   data,
   height = 300,
-  showLegend = true, // ✅ Por defecto, la mini-card sí muestra la leyenda
+  showLegend = true,
+  modoExportacionPDF = false,
 }: {
   data: TipoData[];
   height?: number;
   showLegend?: boolean;
+  modoExportacionPDF?: boolean;
 }) {
   const sortedData = [...data].sort((a, b) => b.cantidad - a.cantidad);
   const total = sortedData.reduce((acc, d) => acc + d.cantidad, 0);
@@ -44,7 +47,12 @@ export default function TiposDispositivoBarChart({
             top: 30,
             right: 30,
             left: 30,
-            bottom: sortedData.length > 8 ? 90 : 50,
+            bottom:
+              modoExportacionPDF || sortedData.some((d) => d.tipo.length > 15)
+                ? 100
+                : sortedData.length > 8
+                ? 70
+                : 50,
           }}
           barCategoryGap={sortedData.length > 8 ? "15%" : "20%"}
           barGap={8}
@@ -52,9 +60,10 @@ export default function TiposDispositivoBarChart({
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey="tipo"
-            tick={{ fontSize: 12, fill: "#374151" }}
-            angle={sortedData.length > 8 ? -30 : 0}
-            textAnchor={sortedData.length > 8 ? "end" : "middle"}
+            tick={{ fontSize: 11, fill: "#374151" }}
+            angle={modoExportacionPDF || sortedData.length > 8 ? -45 : 0}
+            textAnchor={modoExportacionPDF || sortedData.length > 8 ? "end" : "middle"}
+            interval={0}
           />
           <YAxis tick={{ fontSize: 12, fill: "#374151" }} />
           <Tooltip
@@ -98,10 +107,9 @@ export default function TiposDispositivoBarChart({
         </BarChart>
       </ResponsiveContainer>
 
-      {/* ✅ Total BI-Style debajo */}
       <div className="mt-3 text-sm text-gray-700">
         Total dispositivos: <span className="font-semibold">{total}</span>
       </div>
     </div>
   );
-}
+} 
