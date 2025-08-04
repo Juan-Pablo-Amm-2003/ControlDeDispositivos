@@ -1,3 +1,4 @@
+// ✅ Dashboard.tsx COMPLETO con mejoras en título PDF y altura de gráfico PromedioEtapasCard
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -100,11 +101,14 @@ const Dashboard: React.FC = () => {
 
   const exportarPDFConGraficos = async () => {
     const doc = new jsPDF("p", "mm", "a4");
-    let y = 20;
+    let y = 25;
 
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(16);
-    doc.text("📊 Reporte de Indicadores con Gráficos", 14, y);
+    doc.text("Reporte de Indicadores - Gestión de Cambios", 14, y);
     y += 10;
+
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
     doc.text(`Generado: ${new Date().toLocaleString()}`, 14, y);
     y += 10;
@@ -133,7 +137,7 @@ const Dashboard: React.FC = () => {
   };
 
   const exportarPDFTabla = () => {
-    const doc = new jsPDF("l", "mm", "a4"); // horizontal para más espacio
+    const doc = new jsPDF("l", "mm", "a4");
     doc.setFontSize(16);
     doc.text("📋 Listado de Dispositivos", 14, 15);
     doc.setFontSize(10);
@@ -237,8 +241,8 @@ const Dashboard: React.FC = () => {
               <div className="indicador-card xl:col-span-2">
                 <PedidosPorMesCard data={indicadoresFiltrados.pedidos_por_mes} />
               </div>
-              <div className="indicador-card height={360}">
-                <PromedioEtapasCard data={indicadoresFiltrados.promedio_etapas} />
+              <div className="indicador-card xl:col-span-2">
+                <PromedioEtapasCard data={indicadoresFiltrados.promedio_etapas} height={360} />
               </div>
             </div>
           </div>

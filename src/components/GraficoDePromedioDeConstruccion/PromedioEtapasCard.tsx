@@ -7,7 +7,13 @@ interface PromedioEtapas {
   promedio_dias: number;
 }
 
-export default function PromedioEtapasCard({ data }: { data: PromedioEtapas[] }) {
+export default function PromedioEtapasCard({
+  data,
+  height = 280,
+}: {
+  data: PromedioEtapas[];
+  height?: number;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,7 +26,7 @@ export default function PromedioEtapasCard({ data }: { data: PromedioEtapas[] })
           Promedio de Tiempos por Etapa
         </h3>
         <div className="w-full flex justify-center">
-          <PromedioEtapasBarChart data={data} height={280} />
+          <PromedioEtapasBarChart data={data} height={height} />
         </div>
         <p className="text-xs text-gray-500 text-center mt-2">
           (Click para ampliar)
