@@ -39,10 +39,15 @@ export default function PromedioEtapasBarChart({
 
   const formatearNumero = (num: number) => Number(num.toFixed(2));
 
-  const dataRedondeada = data.map((d) => ({
-    ...d,
-    promedio_dias: formatearNumero(d.promedio_dias),
-  }));
+  const etapasFijas = ["Diseño", "Fabricación", "Respuesta Pedido"];
+
+  const dataRedondeada = etapasFijas.map((etapa) => {
+    const existente = data.find((d) => d.etapa === etapa);
+    return {
+      etapa,
+      promedio_dias: existente ? formatearNumero(existente.promedio_dias) : 0,
+    };
+  });
 
   return (
     <div className="flex flex-col items-center w-full" style={{ height }}>
