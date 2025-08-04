@@ -1,4 +1,3 @@
-// ✅ TiposDispositivoBarChart.tsx
 import React from "react";
 import {
   BarChart,
@@ -29,7 +28,11 @@ export default function TiposDispositivoBarChart({
   showLegend?: boolean;
   modoExportacionPDF?: boolean;
 }) {
-  const sortedData = [...data].sort((a, b) => b.cantidad - a.cantidad);
+  // 🔁 Ordenamiento: por tipo si es para exportación, por cantidad en el dashboard
+  const sortedData = modoExportacionPDF
+    ? [...data].sort((a, b) => a.tipo.localeCompare(b.tipo))
+    : [...data].sort((a, b) => b.cantidad - a.cantidad);
+
   const total = sortedData.reduce((acc, d) => acc + d.cantidad, 0);
 
   const getColor = (cantidad: number) => {
@@ -60,10 +63,11 @@ export default function TiposDispositivoBarChart({
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey="tipo"
-            tick={{ fontSize: 11, fill: "#374151" }}
-            angle={modoExportacionPDF || sortedData.length > 8 ? -45 : 0}
-            textAnchor={modoExportacionPDF || sortedData.length > 8 ? "end" : "middle"}
+            tick={{ fontSize: 10, fill: "#374151" }}
+            angle={modoExportacionPDF ? -90 : sortedData.length > 8 ? -45 : 0}
+            textAnchor={modoExportacionPDF ? "end" : sortedData.length > 8 ? "end" : "middle"}
             interval={0}
+            height={modoExportacionPDF ? 140 : undefined}
           />
           <YAxis tick={{ fontSize: 12, fill: "#374151" }} />
           <Tooltip
@@ -107,9 +111,10 @@ export default function TiposDispositivoBarChart({
         </BarChart>
       </ResponsiveContainer>
 
+      {/* ✅ Total BI-Style debajo */}
       <div className="mt-3 text-sm text-gray-700">
         Total dispositivos: <span className="font-semibold">{total}</span>
       </div>
     </div>
   );
-} 
+}
