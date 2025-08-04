@@ -1,4 +1,4 @@
-// ✅ Dashboard.tsx COMPLETO con mejoras en título PDF y altura de gráfico PromedioEtapasCard
+// ✅ Dashboard.tsx COMPLETO con mejoras en título PDF, altura de gráfico y proporción homogénea
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -198,7 +198,6 @@ const Dashboard: React.FC = () => {
         📊 Panel de Control de Dispositivos
       </h1>
 
-      {/* ✅ Subida de Excel */}
       <div className="bg-white p-4 rounded-xl shadow-md">
         <h2 className="text-lg font-semibold mb-2">Subir nuevo archivo Excel</h2>
         <FileUpload onUpload={handleFileUpload} />
@@ -207,7 +206,6 @@ const Dashboard: React.FC = () => {
         )}
       </div>
 
-      {/* ✅ Filtros e Indicadores */}
       <div className="space-y-6">
         <IndicadoresFiltro
           onFilterChange={handleFilterChange}
@@ -249,7 +247,6 @@ const Dashboard: React.FC = () => {
         )}
       </div>
 
-      {/* ✅ Tabla de dispositivos al final */}
       <div className="bg-white p-4 rounded-xl shadow-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Listado de Dispositivos</h2>
