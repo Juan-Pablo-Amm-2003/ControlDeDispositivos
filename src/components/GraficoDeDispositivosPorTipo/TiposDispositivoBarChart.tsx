@@ -1,3 +1,4 @@
+// ✅ TiposDispositivoBarChart.tsx
 import React from "react";
 import {
   BarChart,
@@ -28,7 +29,6 @@ export default function TiposDispositivoBarChart({
   showLegend?: boolean;
   modoExportacionPDF?: boolean;
 }) {
-  // 🔁 Ordenamiento: por tipo si es para exportación, por cantidad en el dashboard
   const sortedData = modoExportacionPDF
     ? [...data].sort((a, b) => a.tipo.localeCompare(b.tipo))
     : [...data].sort((a, b) => b.cantidad - a.cantidad);
@@ -64,8 +64,8 @@ export default function TiposDispositivoBarChart({
           <XAxis
             dataKey="tipo"
             tick={{ fontSize: 10, fill: "#374151" }}
-            angle={modoExportacionPDF ? -90 : sortedData.length > 8 ? -45 : 0}
-            textAnchor={modoExportacionPDF ? "end" : sortedData.length > 8 ? "end" : "middle"}
+            angle={modoExportacionPDF || sortedData.length > 6 ? -45 : 0}
+            textAnchor={modoExportacionPDF || sortedData.length > 6 ? "end" : "middle"}
             interval={0}
             height={modoExportacionPDF ? 140 : undefined}
           />
@@ -111,7 +111,6 @@ export default function TiposDispositivoBarChart({
         </BarChart>
       </ResponsiveContainer>
 
-      {/* ✅ Total BI-Style debajo */}
       <div className="mt-3 text-sm text-gray-700">
         Total dispositivos: <span className="font-semibold">{total}</span>
       </div>
