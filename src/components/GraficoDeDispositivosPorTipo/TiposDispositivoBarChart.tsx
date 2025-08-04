@@ -67,7 +67,7 @@ export default function TiposDispositivoBarChart({
             angle={modoExportacionPDF || sortedData.length > 6 ? -45 : 0}
             textAnchor={modoExportacionPDF || sortedData.length > 6 ? "end" : "middle"}
             interval={0}
-            height={modoExportacionPDF ? 140 : undefined}
+            height={modoExportacionPDF ? 140 : 60}
           />
           <YAxis tick={{ fontSize: 12, fill: "#374151" }} />
           <Tooltip
@@ -86,7 +86,7 @@ export default function TiposDispositivoBarChart({
             <Legend
               verticalAlign="bottom"
               align="center"
-              wrapperStyle={{ marginTop: "20px" }}
+              wrapperStyle={{ marginTop: "40px" }} // ✅ Más separación
             />
           )}
           <Bar
@@ -111,7 +111,7 @@ export default function TiposDispositivoBarChart({
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="mt-3 text-sm text-gray-700">
+      <div className="mt-6 text-sm text-gray-700"> {/* Aumentado el margen superior */}
         Total dispositivos: <span className="font-semibold">{total}</span>
       </div>
     </div>
